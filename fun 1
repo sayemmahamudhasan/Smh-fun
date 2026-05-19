@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Infinite Cosmic Matrix</title>
+    <style>
+        @import url('https://googleapis.com');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #020005;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 🌞 ব্যাকগ্রাউন্ডে জ্বলন্ত সূর্য */
+        .the-sun {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, #fff700 0%, #ff5500 40%, #ff003c 75%, transparent 100%);
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(30px);
+            opacity: 0.35;
+        }
+
+        /* 🌌 ক্যারেক্টার কন্টেইনার */
+        .spawned-entity {
+            position: absolute;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        /* ⏱️ মূল প্রিমিয়াম গ্লাস ড্যাশবোর্ড */
+        .quantum-clock {
+            position: relative;
+            z-index: 10;
+            background: rgba(6, 3, 10, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 45px 55px;
+            border-radius: 28px;
+            border: 2px solid #ff0055;
+            box-shadow: 0 0 70px rgba(255, 0, 85, 0.3), inset 0 0 35px rgba(255, 0, 85, 0.15);
+            text-align: center;
+            max-width: 950px;
+            width: 95%;
+        }
+
+        .clock-header {
+            font-size: 13px;
+            color: #ffaa00;
+            letter-spacing: 7px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .time-row {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            margin-bottom: 25px;
+        }
+
+        .main-time {
+            font-size: 80px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3), 0 0 15px #ff0055;
+            letter-spacing: 4px;
+        }
+
+        .session-tag {
+            font-size: 24px;
+            color: #ffdd00;
+            margin-left: 15px;
+            font-weight: 900;
+        }
+
+        .quantum-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            background: rgba(255, 0, 85, 0.05);
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 0, 85, 0.25);
+            font-family: 'Share Tech Mono', monospace;
+            margin-bottom: 35px;
+        }
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .grid-value {
+            font-size: 26px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+            font-weight: bold;
+        }
+
+        .grid-label {
+            font-size: 10px;
+            color: rgba(255, 220, 180, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 5px;
+        }
+
+        .atto-panel {
+            grid-column: span 5; 
+            margin-top: 15px; 
+            border-top: 1px solid rgba(255, 0, 85, 0.2); 
+            padding-top: 12px;
+        }
+
+        /* কন্ট্রোল বাটন 🛑 */
+        .control-btn {
+            background: transparent;
+            border: 2px solid #ff0055;
+            color: #ff0055;
+            padding: 14px 45px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #ff0055;
+            color: #ffffff;
+            box-shadow: 0 0 35px rgba(255, 0, 85, 0.7);
+            transform: scale(1.05);
+        }
+
+        .control-btn.running {
+            border-color: #ffaa00;
+            color: #ffaa00;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🌞 ব্যাকগ্রাউন্ড সূর্য -->
+    <div class="the-sun"></div>
+
+    <!-- ⏱️ মূল ম্যাট্রিক্স ঘড়ি -->
+    <div class="quantum-clock">
+        <div class="clock-header">Cosmic Entity Overload v6.1</div>
+        
+        <div class="time-row">
+            <span id="mainTime" class="main-time">00:00:00</span>
+            <span id="session" class="session-tag">AM</span>
+        </div>
+
+        <div class="quantum-grid">
+            <div class="grid-item">
+                <span id="v-ms" class="grid-value">000</span>
+                <span class="grid-label">Millisecond</span>
+            </div>
+            <div class="grid-item">
+                <span id="v-mc" class="grid-value">000</span>
+                <span class="grid-label">Microsecond</span>
+            </div>
+            <div class="grid-item">
+                <span id="v-ns" class="grid-value">000</span>
+                <span class="grid-label">Nanosecond</span>
+            </div>
+            <div class="grid-item">
+                <span id="v-pc" class="grid-value">000</span>
+                <span class="grid-label">Picosecond</span>
+            </div>
+            <div class="grid-item">
+                <span id="v-fm" class="grid-value">000</span>
+                <span class="grid-label">Femtosecond</span>
+            </div>
+            <div class="grid-item atto-panel">
+                <span id="v-at" class="grid-value" style="color: #ff0055; font-size: 34px; text-shadow: 0 0 15px rgba(255, 0, 85, 0.7);">000</span>
+                <span class="grid-label">Attosecond OVERLOAD MATRIX</span>
+            </div>
+        </div>
+
+        <button id="ctrlBtn" class="control-btn">🛑 STOP MATRIX</button>
+    </div>
+
+    <script>
+        let isRunning = true;
+        let clockFrameId;
+        
+        // এনকোডিং সমস্যা এড়াতে HTML Unicode ব্যবহার (Robot, Alien, Clown, Pumpkin)
+        const entityList = ['&#129302;', '&#128125;', '&#129313;', '&#127875;'];
+        const activeEntities = [];
+        let lastSpawnTime = 0;
+
+        const mainTimeEl = document.getElementById('mainTime');
+        const sessionEl = document.getElementById('session');
+        const btnEl = document.getElementById('ctrlBtn');
+
+        const msEl = document.getElementById('v-ms');
+        const mcEl = document.getElementById('v-mc');
+        const nsEl = document.getElementById('v-ns');
+        const pcEl = document.getElementById('v-pc');
+        const fmEl = document.getElementById('v-fm');
+        const atEl = document.getElementById('v-at');
+
+        function runClock(timestamp) {
+            if (!isRunning) return;
+
+            // সাধারণ ও বৈজ্ঞানিক সময় গণনা
+            const now = new Date();
+            let hrs = now.getHours();
+            let mins = now.getMinutes();
+            let secs = now.getSeconds();
+            let ampm = hrs >= 12 ? 'PM' : 'AM';
+
+            hrs = hrs % 12;
+            hrs = hrs ? hrs : 12;
+
+            mainTimeEl.textContent = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            sessionEl.textContent = ampm;
+
+            let ms = now.getMilliseconds();
+            let remainder = timestamp % 1000;
+            
+            let mc = Math.floor((remainder % 1) * 1000);
+            let ns = Math.floor(((remainder % 1) * 1000 % 1) * 1000);
+            
+            let pc = Math.floor(Math.random() * 1000);
+            let fm = Math.floor(Math.random() * 1000);
+            let at = Math.floor(Math.random() * 1000);
+
+            msEl.textContent = String(ms).padStart(3, '0');
+            mcEl.textContent = String(mc).padStart(3, '0');
+            nsEl.textContent = String(ns).padStart(3, '0');
+            pcEl.textContent = String(pc).padStart(3, '0');
+            fmEl.textContent = String(fm).padStart(3, '0');
+            atEl.textContent = String(at).padStart(3, '0');
+
+            // 🚀 ডাইনামিক ক্যারেক্টার স্পন লজিক (মেমরি সেফ)
+            if (timestamp - lastSpawnTime > 400) { 
+                createEntity();
+                lastSpawnTime = timestamp;
+            }
+
+            // অবজেক্ট মুভমেন্ট
+            moveEntities();
+
+            clockFrameId = requestAnimationFrame(runClock);
+        }
+
+        function createEntity() {
+            if (activeEntities.length > 30) { // স্ক্রিন জ্যাম হওয়া রোধ করতে লিমিট ৩০ করা হলো
+                const oldEntity = activeEntities.shift();
+                oldEntity.el.remove();
+            }
+
+            const el = document.createElement('div');
+            el.className = 'spawned-entity';
+            el.innerHTML = entityList[Math.floor(Math.random() * entityList.length)];
+            
+            const size = Math.floor(Math.random() * 25) + 30; 
+            el.style.fontSize = size + 'px';
+            
+            const glows = ['#00f2fe', '#00ff66', '#ff0055', '#ff5500'];
+            el.style.filter = `drop-shadow(0 0 10px ${glows[Math.floor(Math.random() * glows.length)]})`;
+
+            const topPos = Math.floor(Math.random() * 80) + 5;
+            el.style.top = topPos + '%';
+
+            const direction = Math.random() > 0.5 ? 1 : -1;
+            let currentLeft = direction === 1 ? -60 : window.innerWidth + 60;
+            el.style.left = currentLeft + 'px';
+
+            document.body.appendChild(el);
+
+            activeEntities.push({
+                el: el,
+                left: currentLeft,
+                speed: (Math.random() * 2) + 2,
+                dir: direction
+            });
+        }
+
+        function moveEntities() {
+            for (let i = activeEntities.length - 1; i >= 0; i--) {
+                const entity = activeEntities[i];
+                entity.left += entity.speed * entity.dir;
+                entity.el.style.left = entity.left + 'px';
+
+                if ((entity.dir === 1 && entity.left > window.innerWidth + 100) || 
+                    (entity.dir === -1 && entity.left  {
+            if (isRunning) {
+                isRunning = false;
+                cancelAnimationFrame(clockFrameId);
+                btnEl.textContent = "▶ START MATRIX";
+                btnEl.classList.add('running');
+            } else {
+                isRunning = true;
+                btnEl.textContent = "🛑 STOP MATRIX";
+                btnEl.classList.remove('running');
+                // লুপ রিস্টার্ট করার সময় নতুন টাইমস্ট্যাম্প পুশ করা
+                requestAnimationFrame(runClock);
+            }
+        });
+
+        // প্রথমবার রান করার জন্য
+        requestAnimationFrame(runClock);
+    </script>
+</body>
+</html>
